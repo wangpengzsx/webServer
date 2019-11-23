@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/public.css" />
+</head>
+<body>
+<div class="m-section p-bg1 lazy">
+    <div class="m-section scroll-box lazy" data-original="images/scroll.png">
+        <ul class="pList-box">
+            <li class="m-section lazy clearfix" data-original="images/pli1.png">
+                <div class="box1">
+                    <img src="images/toux.png" alt="" class="toux">
+                </div>
+                <div class="box2">
+                    昵称
+                </div>
+                <div class="box3">
+                    <span class="jidu"></span>
+                </div>
+                <div class="box4">
+                    <img src="images/zan-1.png" alt="" class="zanImg">
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/jquery.lazyload.js"></script>
+<script src="js/flexible.debug.js"></script>
+<script src="js/flexible_css.debug.js"></script>
+<script>
+$(function(){
+    $(".lazy").lazyload({
+        threshold : 400,
+        placeholder:'js/transparent.gif'
+    });
+    var arr=[
+        {
+            name:'朱世贤',
+            number:56,
+            url:'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJwm4XicHlKD0DzjXLs9PZ4yUeEtEHibqiaxydYjmdoIuePfnDgxaExHb5uL1XDzRnSyXTKcInsGibhoQ/132'
+        },
+        {
+            name:'WP',
+            number:10,
+            url:'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJwm4XicHlKD0DzjXLs9PZ4yUeEtEHibqiaxydYjmdoIuePfnDgxaExHb5uL1XDzRnSyXTKcInsGibhoQ/132'
+        },
+        {
+            name:'习近平',
+            number:50,
+            url:'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJwm4XicHlKD0DzjXLs9PZ4yUeEtEHibqiaxydYjmdoIuePfnDgxaExHb5uL1XDzRnSyXTKcInsGibhoQ/132'
+        },
+        {
+            name:'姚明',
+            number:46,
+            url:'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJwm4XicHlKD0DzjXLs9PZ4yUeEtEHibqiaxydYjmdoIuePfnDgxaExHb5uL1XDzRnSyXTKcInsGibhoQ/132'
+        },
+        {
+            name:'周杰伦',
+            number:43,
+            url:'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJwm4XicHlKD0DzjXLs9PZ4yUeEtEHibqiaxydYjmdoIuePfnDgxaExHb5uL1XDzRnSyXTKcInsGibhoQ/132'
+        },
+        {
+            name:'大张伟',
+            number:40,
+            url:'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJwm4XicHlKD0DzjXLs9PZ4yUeEtEHibqiaxydYjmdoIuePfnDgxaExHb5uL1XDzRnSyXTKcInsGibhoQ/132'
+        },
+        {
+            name:'谭嗣同',
+            number:37,
+            url:'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJwm4XicHlKD0DzjXLs9PZ4yUeEtEHibqiaxydYjmdoIuePfnDgxaExHb5uL1XDzRnSyXTKcInsGibhoQ/132'
+        },
+        {
+            name:'梁启超',
+            number:36,
+            url:'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJwm4XicHlKD0DzjXLs9PZ4yUeEtEHibqiaxydYjmdoIuePfnDgxaExHb5uL1XDzRnSyXTKcInsGibhoQ/132'
+        },
+        {
+            name:'哈哈',
+            number:30,
+            url:'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJwm4XicHlKD0DzjXLs9PZ4yUeEtEHibqiaxydYjmdoIuePfnDgxaExHb5uL1XDzRnSyXTKcInsGibhoQ/132'
+        },
+        {
+            name:'吃屁',
+            number:25,
+            url:'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJwm4XicHlKD0DzjXLs9PZ4yUeEtEHibqiaxydYjmdoIuePfnDgxaExHb5uL1XDzRnSyXTKcInsGibhoQ/132'
+        }
+    ];
+    var htmlStr='';
+    $.each(arr,function(index,obj){
+        htmlStr+= '<li class="m-section lazy clearfix" style="background-image:url(images/pli'+(index+1)+'.png)">';
+        htmlStr+= '<div class="box1"><img src="'+obj.url+'" alt="" class="toux"></div>';
+        htmlStr+= '<div class="box2">'+obj.name+'</div>';
+        htmlStr+= '<div class="box3"><span class="jidu" style="width:'+obj.number/72*2.667+'rem;"></span> </div>';
+        htmlStr+= '<div class="box4"> <img src="images/zan-1.png" alt="" class="zanImg"></div>';
+        htmlStr+= '</li>';
+    })
+    $('.pList-box').html(htmlStr);
+})
+</script>
+
+
+</body>
+</html>
