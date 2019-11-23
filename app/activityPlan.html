@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/public.css" />
+</head>
+<body>
+<div class="m-section o-bg1 lazy" data-original="images/top.jpg"></div>
+<div class="m-section o-bg2 lazy" data-original="images/middle.jpg"></div>
+<div class="m-section o-bg3 lazy" data-original="images/bottom.jpg"></div>
+
+
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/jquery.lazyload.js"></script>
+<script src="js/flexible.debug.js"></script>
+<script src="js/flexible_css.debug.js"></script>
+<script>
+    $(function(){
+        $(".lazy").lazyload({
+            threshold : 400,
+            placeholder:'js/transparent.gif'
+        });
+    })
+</script>
+
+
+</body>
+</html>
