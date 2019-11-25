@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/public.css" />
 </head>
 <body>
-<div class="m-section i-bg1 lazy">
+<div class="m-section i-bg1 lazy" id="indexWin">
     <div class="header-box">
         <img src="js/transparent.gif" id="personalIcon">
         <img src="images/textImg.png" class="textImg" >
@@ -45,6 +45,7 @@
         <div class="content-bottom-box lazy" data-original="images/btBg.png" ></div>
     </div>
 </div>
+<div id="whiteModal"></div>
 
 
 
@@ -113,98 +114,101 @@ $(function(){
    // var cid=$('#c_id').val();
     var openid=getUrlParam('openid');
     var mark=$('#mark').val();
+    //var mark=getUrlParam('mark');
     if(mark!=0){
+        $('#whiteModal').show();
         alert('非参会人员无法进入');
         window.location.href="https://www.lenovo.com.cn/";
-    }
-
-    if(cid){
-        $('#personalIcon').attr('src','http://testpc.zui.com/static/profile_image/'+cid+'.png');
-        displayZan(cid)
-        displayComment(cid)
     }else{
-        alert('没有接到cid')
-    }
-    if(openid){
-        $('#clickZan').click(function(){
-            var openidList=$('.zan-right-box img');
-            var zanState=true;
-            $.each(openidList,function(index,obj){
-                var touid=$(obj).attr('openid');
-                if(openid==touid){
-                    zanState=false
-                    return false;
+        $('#whiteModal').hide();
+        if(cid){
+            $('#personalIcon').attr('src','http://testpc.zui.com/static/profile_image/'+cid+'.png');
+            displayZan(cid)
+            displayComment(cid)
+        }else{
+            alert('没有接到cid')
+        }
+        if(openid){
+            $('#clickZan').click(function(){
+                var openidList=$('.zan-right-box img');
+                var zanState=true;
+                $.each(openidList,function(index,obj){
+                    var touid=$(obj).attr('openid');
+                    if(openid==touid){
+                        zanState=false
+                        return false;
+                    }
+                })
+                if(zanState){
+                    $.ajax({
+                        url:'http://testpc.zui.com/sendlike?cid='+cid+'&openid='+openid,
+                        type:'post',
+                        data:{
+                            cid:cid,
+                            openid:openid
+                        },
+                        success:function(res){
+                            if(res.msg=="success"){
+                                displayZan(cid)
+                            }else{
+                                alert('点赞失败');
+                            }
+                        }
+                    })
+                }else{
+                    alert('请不要重复点赞');
                 }
             })
-            if(zanState){
-                $.ajax({
-                    url:'http://testpc.zui.com/sendlike?cid='+cid+'&openid='+openid,
-                    type:'post',
-                    data:{
-                        cid:cid,
-                        openid:openid
-                    },
-                    success:function(res){
-                        if(res.msg=="success"){
-                            displayZan(cid)
-                        }else{
-                            alert('点赞失败');
+            $('#sendcomment').click(function(){
+                var sendText=$.trim($('#sendText').val());
+                if(sendText!=''){
+                    $.ajax({
+                        url:'http://testpc.zui.com/sendcomment',
+                        type:'post',
+                        data:{
+                            cid:cid,
+                            openid:openid,
+                            comment:sendText
+                        },
+                        success:function(res){
+                            if(res.msg="success"){
+                                displayComment(cid)
+                                $('#sendText').val('')
+                            }else{
+                                alert('评论失败')
+                            }
                         }
-                    }
-                })
-            }else{
-                alert('请不要重复点赞');
-            }
-        })
-        $('#sendcomment').click(function(){
-            var sendText=$.trim($('#sendText').val());
-            if(sendText!=''){
-                $.ajax({
-                    url:'http://testpc.zui.com/sendcomment',
-                    type:'post',
-                    data:{
-                        cid:cid,
-                        openid:openid,
-                        comment:sendText
-                    },
-                    success:function(res){
-                        if(res.msg="success"){
-                            displayComment(cid)
-                        }else{
-                            alert('评论失败')
-                        }
-                    }
-                })
-            }else{
-                alert('发送内容不能为空');
-            }
-        })
-        $('#sendText').focus(function(){
-            var scrollHeight = $('.i-bg1').prop("scrollHeight");
-            $('.i-bg1').scrollTop(scrollHeight,200);
-        })
-        $('#lookBtn').click(function(){
-            var arr=[];
-            for(var i=1;i<73;i++){
-                arr.push(i);
-            }
-            arr.splice(36-1, 1);
-            arr.splice(39-2, 1);
-            //console.log(arr);
-            var index=arr[Math.floor((Math.random()*arr.length))];
-            //console.log(index)
-            window.location.href='http://testpc.zui.com/profile/'+index;
-        })
-        $('#orderBtn').click(function(){
-            window.location.href='http://testpc.zui.com/rankList';
-        })
-    }else{
-        alert('没有收到openid')
+                    })
+                }else{
+                    alert('发送内容不能为空');
+                }
+            })
+            $("#sendText").on("blur",function(){
+                setTimeout(function(){
+                    window.scrollTo(0,0);
+                },200)
+            })
+            $('#lookBtn').click(function(){
+                var arr=[];
+                for(var i=1;i<73;i++){
+                    arr.push(i);
+                }
+                arr.splice(36-1, 1);
+                arr.splice(39-2, 1);
+                //console.log(arr);
+                var index=arr[Math.floor((Math.random()*arr.length))];
+                //console.log(index)
+                window.location.href='http://testpc.zui.com/profile/'+index;
+                //window.location.href='http://localhost:8088/?cid='+index+'&openid=oLHCTjjD7Irw4xJH1NinWaILJrgk';
+
+            })
+            $('#orderBtn').click(function(){
+                window.location.href='http://testpc.zui.com/rankList';
+            })
+        }else{
+            alert('没有收到openid')
+        }
     }
-
-
-
-
 })
 </script>
 

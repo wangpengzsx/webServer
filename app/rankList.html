@@ -2,27 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>排行榜</title>
     <link rel="stylesheet" href="css/public.css" />
 </head>
 <body>
 <div class="m-section p-bg1 lazy">
     <div class="m-section scroll-box lazy" data-original="images/scroll.png">
         <ul class="pList-box">
-            <li class="m-section lazy clearfix" data-original="images/pli1.png">
-                <div class="box1">
-                    <img src="images/toux.png" alt="" class="toux">
-                </div>
-                <div class="box2">
-                    昵称
-                </div>
-                <div class="box3">
-                    <span class="jidu"></span>
-                </div>
-                <div class="box4">
-                    <img src="images/zan-1.png" alt="" class="zanImg">
-                </div>
-            </li>
         </ul>
     </div>
 </div>
@@ -43,6 +29,9 @@ $(function(){
             var htmlStr='';
             if(res.msg=='success'){
                 if(res.data.length>0){
+                    if(res.data.length>10){
+                        res.data=res.data.slice(0,10)
+                    }
                     $.each(res.data,function(index,obj){
                         htmlStr+= '<li class="m-section lazy clearfix" style="background-image:url(images/pli'+(index+1)+'.png)">';
                         htmlStr+= '<div class="box1"><img src="http://testpc.zui.com/static/rank_image/'+obj.cid+'.png" alt="" class="toux"></div>';
