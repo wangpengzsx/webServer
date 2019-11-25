@@ -8,14 +8,16 @@
 <body>
 <div class="m-section i-bg1 lazy">
     <div class="header-box">
-        <img class="lazy" alt="" data-original="images/header.png">
-        <img src="images/praise.png" alt="" class="praise" id="clickZan">
+        <img src="js/transparent.gif" id="personalIcon">
+        <img src="images/textImg.png" class="textImg" >
+        <img src="images/praise.png" class="praise" id="clickZan">
     </div>
     <div class="content-box">
         <div class="btn-box">
             <img src="images/lookBtn.png" alt="" id="lookBtn">
             <img src="images/orderBtn.png" class="f-right" alt="" id="orderBtn">
             <input type="hidden" value="<?=$tpl_cid?>" id="c_id"/>
+            <input type="hidden" value="0" id="mark"/>
         </div>
         <div class="content-top-box lazy"  data-original="images/topBg.png" ></div>
         <div class="content-middle-box">
@@ -24,16 +26,6 @@
                     <img src="images/heart.png" alt="">
                 </div>
                 <div class="zan-right-box clearfix">
-                    <img src="images/toux.png" alt="">
-                    <img src="images/toux.png" alt="">
-                    <img src="images/toux.png" alt="">
-                    <img src="images/toux.png" alt="">
-                    <img src="images/toux.png" alt="">
-                    <img src="images/toux.png" alt="">
-                    <img src="images/toux.png" alt="">
-                    <img src="images/toux.png" alt="">
-                    <img src="images/toux.png" alt="">
-                    <img src="images/toux.png" alt="">
                 </div>
             </div>
             <div class="comment-box clearfix">
@@ -42,13 +34,6 @@
                 </div>
                 <div class="comment-right-box">
                     <ul class="comment-list clearfix">
-                        <li class="clearfix">
-                            <img src="images/toux.png" alt="">
-                            <div class="text-box">
-                                <h1>张三</h1>
-                                <p></p>
-                            </div>
-                        </li>
                     </ul>
                     <div class="input-box">
                         <span class="liuyan-text">留言：</span><input id="sendText" type="text" maxlength="50" placeholder="请留下你想对他说的话"/>
@@ -90,6 +75,8 @@ function displayZan(cid){
                 }else{
                     $('.zan-box').hide()
                 }
+            }else{
+                alert(res.msg)
             }
         }
     })
@@ -111,6 +98,8 @@ function displayComment(cid){
                     htmlStr+='</li>';
                 })
                 $('.comment-list').html(htmlStr);
+            }else{
+                alert(res.msg);
             }
         }
     })
@@ -123,8 +112,14 @@ $(function(){
     var cid=getUrlParam('cid');
    // var cid=$('#c_id').val();
     var openid=getUrlParam('openid');
-    console.log(openid);
+    var mark=$('#mark').val();
+    if(mark!=0){
+        alert('非参会人员无法进入');
+        window.location.href="https://www.lenovo.com.cn/";
+    }
+
     if(cid){
+        $('#personalIcon').attr('src','http://testpc.zui.com/static/profile_image/'+cid+'.png');
         displayZan(cid)
         displayComment(cid)
     }else{
@@ -160,39 +155,48 @@ $(function(){
             }else{
                 alert('请不要重复点赞');
             }
-
         })
         $('#sendcomment').click(function(){
-            var sendText=$('#sendText').val();
-            $.ajax({
-                url:'http://testpc.zui.com/sendcomment',
-                type:'post',
-                data:{
-                    cid:cid,
-                    openid:openid,
-                    comment:sendText
-                },
-                success:function(res){
-                    if(res.msg="success"){
-                        displayComment(cid)
-                    }else{
-                        alert('评论失败')
+            var sendText=$.trim($('#sendText').val());
+            if(sendText!=''){
+                $.ajax({
+                    url:'http://testpc.zui.com/sendcomment',
+                    type:'post',
+                    data:{
+                        cid:cid,
+                        openid:openid,
+                        comment:sendText
+                    },
+                    success:function(res){
+                        if(res.msg="success"){
+                            displayComment(cid)
+                        }else{
+                            alert('评论失败')
+                        }
                     }
-                }
-            })
-
+                })
+            }else{
+                alert('发送内容不能为空');
+            }
+        })
+        $('#sendText').focus(function(){
+            var scrollHeight = $('.i-bg1').prop("scrollHeight");
+            $('.i-bg1').scrollTop(scrollHeight,200);
         })
         $('#lookBtn').click(function(){
             var arr=[];
-            for(var i=1;i<71;i++){
+            for(var i=1;i<73;i++){
                 arr.push(i);
             }
-            console.log(arr);
+            arr.splice(36-1, 1);
+            arr.splice(39-2, 1);
+            //console.log(arr);
             var index=arr[Math.floor((Math.random()*arr.length))];
-            console.log(index)
+            //console.log(index)
             window.location.href='http://testpc.zui.com/profile/'+index;
-
-
+        })
+        $('#orderBtn').click(function(){
+            window.location.href='http://testpc.zui.com/rankList';
         })
     }else{
         alert('没有收到openid')

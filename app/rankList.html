@@ -26,8 +26,6 @@
         </ul>
     </div>
 </div>
-
-
 <script src="js/jquery-2.1.4.min.js"></script>
 <script src="js/jquery.lazyload.js"></script>
 <script src="js/flexible.debug.js"></script>
@@ -38,68 +36,31 @@ $(function(){
         threshold : 400,
         placeholder:'js/transparent.gif'
     });
-    var arr=[
-        {
-            name:'朱世贤',
-            number:56,
-            url:'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJwm4XicHlKD0DzjXLs9PZ4yUeEtEHibqiaxydYjmdoIuePfnDgxaExHb5uL1XDzRnSyXTKcInsGibhoQ/132'
-        },
-        {
-            name:'WP',
-            number:10,
-            url:'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJwm4XicHlKD0DzjXLs9PZ4yUeEtEHibqiaxydYjmdoIuePfnDgxaExHb5uL1XDzRnSyXTKcInsGibhoQ/132'
-        },
-        {
-            name:'习近平',
-            number:50,
-            url:'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJwm4XicHlKD0DzjXLs9PZ4yUeEtEHibqiaxydYjmdoIuePfnDgxaExHb5uL1XDzRnSyXTKcInsGibhoQ/132'
-        },
-        {
-            name:'姚明',
-            number:46,
-            url:'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJwm4XicHlKD0DzjXLs9PZ4yUeEtEHibqiaxydYjmdoIuePfnDgxaExHb5uL1XDzRnSyXTKcInsGibhoQ/132'
-        },
-        {
-            name:'周杰伦',
-            number:43,
-            url:'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJwm4XicHlKD0DzjXLs9PZ4yUeEtEHibqiaxydYjmdoIuePfnDgxaExHb5uL1XDzRnSyXTKcInsGibhoQ/132'
-        },
-        {
-            name:'大张伟',
-            number:40,
-            url:'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJwm4XicHlKD0DzjXLs9PZ4yUeEtEHibqiaxydYjmdoIuePfnDgxaExHb5uL1XDzRnSyXTKcInsGibhoQ/132'
-        },
-        {
-            name:'谭嗣同',
-            number:37,
-            url:'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJwm4XicHlKD0DzjXLs9PZ4yUeEtEHibqiaxydYjmdoIuePfnDgxaExHb5uL1XDzRnSyXTKcInsGibhoQ/132'
-        },
-        {
-            name:'梁启超',
-            number:36,
-            url:'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJwm4XicHlKD0DzjXLs9PZ4yUeEtEHibqiaxydYjmdoIuePfnDgxaExHb5uL1XDzRnSyXTKcInsGibhoQ/132'
-        },
-        {
-            name:'哈哈',
-            number:30,
-            url:'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJwm4XicHlKD0DzjXLs9PZ4yUeEtEHibqiaxydYjmdoIuePfnDgxaExHb5uL1XDzRnSyXTKcInsGibhoQ/132'
-        },
-        {
-            name:'吃屁',
-            number:25,
-            url:'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJwm4XicHlKD0DzjXLs9PZ4yUeEtEHibqiaxydYjmdoIuePfnDgxaExHb5uL1XDzRnSyXTKcInsGibhoQ/132'
+    $.ajax({
+        url:"http://testpc.zui.com/rank",
+        type:'get',
+        success:function(res){
+            var htmlStr='';
+            if(res.msg=='success'){
+                if(res.data.length>0){
+                    $.each(res.data,function(index,obj){
+                        htmlStr+= '<li class="m-section lazy clearfix" style="background-image:url(images/pli'+(index+1)+'.png)">';
+                        htmlStr+= '<div class="box1"><img src="http://testpc.zui.com/static/rank_image/'+obj.cid+'.png" alt="" class="toux"></div>';
+                        htmlStr+= '<div class="box2">'+obj.name+'</div>';
+                        htmlStr+= '<div class="box3"><span class="jidu" style="width:'+obj.cnt/72*2.667+'rem;"></span> </div>';
+                        htmlStr+= '<div class="box4"> <img src="images/zan-1.png" alt="" class="zanImg"></div>';
+                        htmlStr+= '</li>';
+                    })
+                    $('.pList-box').html(htmlStr);
+                }else{
+                    $('.pList-box').html('暂无数据');
+                }
+
+            }else{
+                alert('获取失败');
+            }
         }
-    ];
-    var htmlStr='';
-    $.each(arr,function(index,obj){
-        htmlStr+= '<li class="m-section lazy clearfix" style="background-image:url(images/pli'+(index+1)+'.png)">';
-        htmlStr+= '<div class="box1"><img src="'+obj.url+'" alt="" class="toux"></div>';
-        htmlStr+= '<div class="box2">'+obj.name+'</div>';
-        htmlStr+= '<div class="box3"><span class="jidu" style="width:'+obj.number/72*2.667+'rem;"></span> </div>';
-        htmlStr+= '<div class="box4"> <img src="images/zan-1.png" alt="" class="zanImg"></div>';
-        htmlStr+= '</li>';
     })
-    $('.pList-box').html(htmlStr);
 })
 </script>
 
