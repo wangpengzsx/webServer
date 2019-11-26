@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>Title</title>
     <link rel="stylesheet" href="css/public.css" />
 </head>
@@ -117,7 +120,7 @@ $(function(){
     //var mark=getUrlParam('mark');
     if(mark!=0){
         $('#whiteModal').show();
-        alert('非参会人员无法进入');
+        alert('您还没有查看CET 2019通讯录的权限，请联系会务组。');
         window.location.href="https://www.lenovo.com.cn/";
     }else{
         $('#whiteModal').hide();
@@ -156,7 +159,7 @@ $(function(){
                         }
                     })
                 }else{
-                    alert('请不要重复点赞');
+                    alert('您已经点过赞了。');
                 }
             })
             $('#sendcomment').click(function(){
@@ -180,7 +183,7 @@ $(function(){
                         }
                     })
                 }else{
-                    alert('发送内容不能为空');
+                    alert('请输入您想评论的内容。');
                 }
             })
             $("#sendText").on("blur",function(){
@@ -195,9 +198,7 @@ $(function(){
                 }
                 arr.splice(36-1, 1);
                 arr.splice(39-2, 1);
-                //console.log(arr);
                 var index=arr[Math.floor((Math.random()*arr.length))];
-                //console.log(index)
                 window.location.href='http://testpc.zui.com/profile/'+index;
                 //window.location.href='http://localhost:8088/?cid='+index+'&openid=oLHCTjjD7Irw4xJH1NinWaILJrgk';
 

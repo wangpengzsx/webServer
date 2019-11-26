@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>排行榜</title>
     <link rel="stylesheet" href="css/public.css" />
 </head>
@@ -9,7 +12,14 @@
 <div class="m-section p-bg1 lazy">
     <div class="m-section scroll-box lazy" data-original="images/scroll.png">
         <ul class="pList-box">
+            <li class="m-section lazy clearfix" data-original="images/pli1.png">
+                <div class="box1"><img src="images/toux.png" alt="" class="toux"></div>
+                <div class="box2">昵称</div>
+                <div class="box3"><span class="jidu"></span></div>
+                <div class="box4"><img src="images/zan-1.png" alt="" class="zanImg"></div>
+            </li>
         </ul>
+        <div class="go-back-box"><img src="images/goBack.png" alt="" id="goBack"></div>
     </div>
 </div>
 <script src="js/jquery-2.1.4.min.js"></script>
@@ -22,6 +32,9 @@ $(function(){
         threshold : 400,
         placeholder:'js/transparent.gif'
     });
+    $('#goBack').click(function(){
+        window.history.go(-1);
+    })
     $.ajax({
         url:"http://testpc.zui.com/rank",
         type:'get',
